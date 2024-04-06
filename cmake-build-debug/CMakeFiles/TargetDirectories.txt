@@ -1,0 +1,3 @@
+/Users/juanaboites/dev/postlink/avf-transcode-cpp/cmake-build-debug/CMakeFiles/avf_transcode_cpp.dir
+/Users/juanaboites/dev/postlink/avf-transcode-cpp/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/juanaboites/dev/postlink/avf-transcode-cpp/cmake-build-debug/CMakeFiles/rebuild_cache.dir

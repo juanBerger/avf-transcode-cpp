@@ -1,0 +1,5 @@
+# ninja log v5
+13	818	1712378997448829946	CMakeFiles/avf_transcode_cpp.dir/src/main.mm.o	5662f7ef1825e7f5
+1	45	1712379157537413908	build.ninja	2de7d7bde1093cb8
+818	900	1712378997534888462	avf_transcode_cpp	e26cabcea462f219
+11	667	1712379723859872566	CMakeFiles/avf_transcode_cpp.dir/src/main.mm.o	5662f7ef1825e7f5
