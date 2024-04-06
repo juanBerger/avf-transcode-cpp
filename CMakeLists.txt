@@ -8,4 +8,5 @@ add_executable(avf_transcode_cpp
 target_link_libraries(avf_transcode_cpp "-framework Foundation")
 target_link_libraries(avf_transcode_cpp "-framework AVFoundation")
 target_link_libraries(avf_transcode_cpp "-framework CoreMedia")
+target_link_libraries(avf_transcode_cpp "-framework CoreVideo")
 target_link_libraries(avf_transcode_cpp "-framework CoreFoundation")

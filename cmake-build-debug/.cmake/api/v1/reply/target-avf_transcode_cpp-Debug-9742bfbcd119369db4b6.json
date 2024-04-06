@@ -51,6 +51,12 @@
 				"file" : 0,
 				"line" : 11,
 				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 12,
+				"parent" : 0
 			}
 		]
 	},
@@ -108,6 +114,11 @@
 			},
 			{
 				"backtrace" : 5,
+				"fragment" : "-framework CoreVideo",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 6,
 				"fragment" : "-framework CoreFoundation",
 				"role" : "libraries"
 			}

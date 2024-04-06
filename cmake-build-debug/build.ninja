@@ -65,7 +65,7 @@ build CMakeFiles/avf_transcode_cpp.dir/src/main.mm.o: CXX_COMPILER__avf_transcod
 
 build avf_transcode_cpp: CXX_EXECUTABLE_LINKER__avf_transcode_cpp_Debug CMakeFiles/avf_transcode_cpp.dir/src/main.mm.o
   FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk
-  LINK_LIBRARIES = -framework Foundation  -framework AVFoundation  -framework CoreMedia  -framework CoreFoundation
+  LINK_LIBRARIES = -framework Foundation  -framework AVFoundation  -framework CoreMedia  -framework CoreVideo  -framework CoreFoundation
   OBJECT_DIR = CMakeFiles/avf_transcode_cpp.dir
   POST_BUILD = :
   PRE_LINK = :
