@@ -7,27 +7,34 @@ void transcode(const std::string& inputPath){
     NSURL* inputURL = [NSURL fileURLWithPath:[NSString stringWithUTF8String:inputPath.c_str()]];
     NSError* error = Nil;
 
-    // Create an AVAsset with a URL pointing at a local asset. Create an AVAssetReader for the asset
+    CMTime startTimeValue = CMTimeMakeWithSeconds(1, 1000);
+    CMTime durationValue = CMTimeMakeWithSeconds(0.3, 1000);
+
     AVAsset *srcAsset = [AVAsset assetWithURL:inputURL];
-    AVAssetReader *srcAssetReader = [AVAssetReader assetReaderWithAsset:srcAsset
-                                                               error:&error];
+    AVAssetReader *srcAssetReader = [AVAssetReader assetReaderWithAsset:srcAsset error:&error];
+    srcAssetReader.timeRange = CMTimeRangeMake(startTimeValue, durationValue);
 
-    // Copy the array of video tracks from the source movie
-    NSArray<AVAssetTrack*>  *tracks = [srcAsset tracksWithMediaType:AVMediaTypeVideo];
-    AVAssetTrack *track = [tracks objectAtIndex:0]; //just gets the first track, will have to modify this
+    NSArray<AVAssetTrack*> *tracks = [srcAsset tracksWithMediaType:AVMediaTypeVideo];
+    AVAssetTrack *track = Nil;
 
-    //Create the asset reader track output for this video track, requesting ‘y416’ output.
-    //Not sure what to set here,
-    NSDictionary *outputSettings = @{(id)kCVPixelBufferPixelFormatTypeKey :
-                                      @(kCVPixelFormatType_4444AYpCbCr16) };
+    for (int i=0; i < [tracks count]; i++){
+        AVMediaType t_type = tracks[i].mediaType;
+        if ([t_type isEqual: @"vide"]){
+            track = tracks[i];
+            break;
+        }
+    }
+
+    //Check here for which format to use -->
+    //https://developer.apple.com/documentation/avfoundation/avassetreadertrackoutput?language=objc
+    NSDictionary *outputSettings = @{(id)kCVPixelBufferPixelFormatTypeKey : @(kCVPixelFormatType_420YpCbCr8BiPlanarVideoRange) };
 
     AVAssetReaderTrackOutput* assetReaderTrackOutput
             = [AVAssetReaderTrackOutput assetReaderTrackOutputWithTrack:track outputSettings:outputSettings];
 
     assetReaderTrackOutput.alwaysCopiesSampleData = NO; //this is important
-    [srcAssetReader addOutput:assetReaderTrackOutput]; //Connect the AVAssetReaderTrackOutput to the AVAssetReader
+    [srcAssetReader addOutput:assetReaderTrackOutput];
 
-    //Set up the writer
     NSDictionary *writerSettings = @{
             AVVideoCodecKey: AVVideoCodecTypeH264,
             AVVideoWidthKey: @(960),
@@ -36,6 +43,7 @@ void transcode(const std::string& inputPath){
                     AVVideoAverageBitRateKey: @(400000)
             }
     };
+
     AVAssetWriterInput *writerInput = [AVAssetWriterInput assetWriterInputWithMediaType:AVMediaTypeVideo outputSettings:writerSettings];
     writerInput.expectsMediaDataInRealTime = YES;
     AVAssetWriterInputPixelBufferAdaptor *adaptor = [AVAssetWriterInputPixelBufferAdaptor assetWriterInputPixelBufferAdaptorWithAssetWriterInput:writerInput sourcePixelBufferAttributes:nil];
@@ -44,8 +52,8 @@ void transcode(const std::string& inputPath){
 
     if (success) {
 
-        CMSampleBufferRef sampleBuffer = NULL;
-        // output is a AVAssetReaderOutput
+        CMSampleBufferRef sampleBuffer = Nil;
+
         while ((sampleBuffer = [assetReaderTrackOutput copyNextSampleBuffer]))
         {
             CVImageBufferRef pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
@@ -61,17 +69,13 @@ void transcode(const std::string& inputPath){
                 size_t bytesPerRow = CVPixelBufferGetBytesPerRow(pixelBuffer);
                 size_t height = CVPixelBufferGetHeight(pixelBuffer);
 
-                // Create a data object with the pixel data
                 NSData *frameData = [NSData dataWithBytes:pixelData length:bytesPerRow * height];
-
-                // Send the frame data across the network
-                // ...
 
                 CVPixelBufferUnlockBaseAddress(pixelBuffer, 0);
 
                 // Release the sample buffer
                 CFRelease(sampleBuffer);
-                std::cout << "transcoded frame" << std::endl;
+                std::cout << bytesPerRow << std::endl;
             }
         }
     }
@@ -81,7 +85,6 @@ void transcode(const std::string& inputPath){
 int main() {
     
     std::string inputFile = "/Users/juanaboites/dev/postlink/avf-transcode-cpp/src/videos/large_prores.mov";
-    std::string outputFile = "./videos/smp.mov";
     double startTime = 1.0; // Start time in seconds
     double duration = 1.0; // Duration in seconds
 
