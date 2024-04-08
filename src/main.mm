@@ -7,23 +7,15 @@ void transcode(const std::string& inputPath){
     NSURL* inputURL = [NSURL fileURLWithPath:[NSString stringWithUTF8String:inputPath.c_str()]];
     NSError* error = Nil;
 
-    CMTime startTimeValue = CMTimeMakeWithSeconds(1, 1000);
-    CMTime durationValue = CMTimeMakeWithSeconds(0.3, 1000);
+    CMTime startTimeValue = CMTimeMakeWithSeconds(0, 1000);
+    CMTime durationValue = CMTimeMakeWithSeconds(1, 1000);
 
     AVAsset *srcAsset = [AVAsset assetWithURL:inputURL];
     AVAssetReader *srcAssetReader = [AVAssetReader assetReaderWithAsset:srcAsset error:&error];
     srcAssetReader.timeRange = CMTimeRangeMake(startTimeValue, durationValue);
 
-    NSArray<AVAssetTrack*> *tracks = [srcAsset tracksWithMediaType:AVMediaTypeVideo];
-    AVAssetTrack *track = Nil;
-
-    for (int i=0; i < [tracks count]; i++){
-        AVMediaType t_type = tracks[i].mediaType;
-        if ([t_type isEqual: @"vide"]){
-            track = tracks[i];
-            break;
-        }
-    }
+    NSArray<AVAssetTrack*> *tracks = [srcAsset tracksWithMediaType:AVMediaTypeVideo]; //this already filters only video track
+    AVAssetTrack *track = [tracks objectAtIndex:0]; //so just get the first
 
     //Check here for which format to use -->
     //https://developer.apple.com/documentation/avfoundation/avassetreadertrackoutput?language=objc
@@ -56,6 +48,9 @@ void transcode(const std::string& inputPath){
 
         while ((sampleBuffer = [assetReaderTrackOutput copyNextSampleBuffer]))
         {
+            CMTime ts = CMSampleBufferGetPresentationTimeStamp(sampleBuffer);
+            std::cout << ts.value << std::endl;
+            //std::cout << ts.timescale << std::endl;
             CVImageBufferRef pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
 
             if (pixelBuffer){
@@ -75,7 +70,6 @@ void transcode(const std::string& inputPath){
 
                 // Release the sample buffer
                 CFRelease(sampleBuffer);
-                std::cout << bytesPerRow << std::endl;
             }
         }
     }
@@ -84,7 +78,7 @@ void transcode(const std::string& inputPath){
 
 int main() {
     
-    std::string inputFile = "/Users/juanaboites/dev/postlink/avf-transcode-cpp/src/videos/large_prores.mov";
+    std::string inputFile = "/Users/juanaboites/dev/postlink/avf-transcode-cpp/src/videos/two.mp4";
     double startTime = 1.0; // Start time in seconds
     double duration = 1.0; // Duration in seconds
 

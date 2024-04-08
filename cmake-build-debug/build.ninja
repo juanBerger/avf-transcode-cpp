@@ -55,6 +55,12 @@ build CMakeFiles/avf_transcode_cpp.dir/src/main.mm.o: CXX_COMPILER__avf_transcod
   OBJECT_DIR = CMakeFiles/avf_transcode_cpp.dir
   OBJECT_FILE_DIR = CMakeFiles/avf_transcode_cpp.dir/src
 
+build CMakeFiles/avf_transcode_cpp.dir/src/StreamTranscoder.mm.o: CXX_COMPILER__avf_transcode_cpp_unscanned_Debug /Users/juanaboites/dev/postlink/avf-transcode-cpp/src/StreamTranscoder.mm || cmake_object_order_depends_target_avf_transcode_cpp
+  DEP_FILE = CMakeFiles/avf_transcode_cpp.dir/src/StreamTranscoder.mm.o.d
+  FLAGS = -g -std=gnu++14 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -fcolor-diagnostics
+  OBJECT_DIR = CMakeFiles/avf_transcode_cpp.dir
+  OBJECT_FILE_DIR = CMakeFiles/avf_transcode_cpp.dir/src
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target avf_transcode_cpp
@@ -63,7 +69,7 @@ build CMakeFiles/avf_transcode_cpp.dir/src/main.mm.o: CXX_COMPILER__avf_transcod
 #############################################
 # Link the executable avf_transcode_cpp
 
-build avf_transcode_cpp: CXX_EXECUTABLE_LINKER__avf_transcode_cpp_Debug CMakeFiles/avf_transcode_cpp.dir/src/main.mm.o
+build avf_transcode_cpp: CXX_EXECUTABLE_LINKER__avf_transcode_cpp_Debug CMakeFiles/avf_transcode_cpp.dir/src/main.mm.o CMakeFiles/avf_transcode_cpp.dir/src/StreamTranscoder.mm.o
   FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk
   LINK_LIBRARIES = -framework Foundation  -framework AVFoundation  -framework CoreMedia  -framework CoreVideo  -framework CoreFoundation
   OBJECT_DIR = CMakeFiles/avf_transcode_cpp.dir
