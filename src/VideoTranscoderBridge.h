@@ -13,8 +13,9 @@ class VideoTranscoderBridge
 
         VideoTranscoderBridge();
         ~VideoTranscoderBridge();
-        //bool setNewSource(std::string& path, Float64 start);
         static std::string getCurrentPath();
+        static bool setNewSource(std::string& path, float startTime);
+        static bool decodeBatch();
 
     private:
 

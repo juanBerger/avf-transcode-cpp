@@ -33,7 +33,7 @@
         else return nil;
     }
 
-    + (BOOL) setNewSource:(std::string&)path startTime:(Float64)startTime{
+    + (BOOL) setNewSource:(std::string&)path secondArg:(float)startTime{
 
         currentPath = [NSString stringWithUTF8String:path.c_str()];
         NSURL* url = [NSURL fileURLWithPath:currentPath];
@@ -82,7 +82,7 @@
 
     }
 
-    + (BOOL) DecodeBatch{
+    + (BOOL) decodeBatch{
 
         int loopNum = 0;
         CMSampleBufferRef sampleBuffer = Nil;
@@ -112,6 +112,9 @@
 
                 CVPixelBufferUnlockBaseAddress(pixelBuffer, 0);
                 CFRelease(sampleBuffer);
+
+                //NSLog(@"Frame Transcoded");
+                std::cout << "Frame Transcoded" << std::endl;
 
                 ++loopNum;
             }

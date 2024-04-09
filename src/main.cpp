@@ -6,9 +6,13 @@
 
 int main() {
     std::string inputFile = "/Users/juanaboites/dev/postlink/avf-transcode-cpp/src/videos/two.mp4";
-    VideoTranscoderBridge vtb;
-    std::string cp = vtb.getCurrentPath();
-    std::cout << cp << std::endl;
+
+    VideoTranscoderBridge::setNewSource(inputFile, 1);
+    std::string currentPath = VideoTranscoderBridge::getCurrentPath();
+    std::cout << currentPath << std::endl;
+
+    VideoTranscoderBridge::decodeBatch();
+
     std::cout << "Done" << std::endl;
     return 0;
 }

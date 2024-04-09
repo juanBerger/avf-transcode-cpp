@@ -13,9 +13,13 @@
 VideoTranscoderBridge::VideoTranscoderBridge()= default;
 VideoTranscoderBridge::~VideoTranscoderBridge()= default;
 
-//bool VideoTranscoderBridge::setNewSource(std::string &path, Float64 start) {
-//    return vt.
-//}
+bool VideoTranscoderBridge::setNewSource(std::string& path, float startTime){
+    return [VideoTranscoder setNewSource:path secondArg:startTime];
+}
+
+bool VideoTranscoderBridge::decodeBatch() {
+    return [VideoTranscoder decodeBatch];
+}
 
 std::string VideoTranscoderBridge::getCurrentPath() {
     NSString *obj_String = [VideoTranscoder getCurrentPath];

@@ -15,8 +15,8 @@ extern "C" {
     @interface VideoTranscoder : NSObject
         + (NSString*) getCurrentPath;
         + (NSString*) getFrame:(int32_t)ts;
-        + (BOOL) setNewSource:(std::string&)path startTime:(Float64)startTime;
-        + (BOOL) DecodeBatch;
+        + (BOOL) setNewSource:(std::string&)path secondArg:(float)startTime;
+        + (BOOL) decodeBatch;
     @end
 
 #ifdef __cplusplus
