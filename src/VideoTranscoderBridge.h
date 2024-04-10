@@ -14,6 +14,8 @@ class VideoTranscoderBridge
         VideoTranscoderBridge();
         ~VideoTranscoderBridge();
         static std::string getCurrentPath();
+        static void transcodeToFile(std::string& path);
+        static void transcodeToMemory(std::string& path);
         static bool setNewSource(std::string& path, float startTime);
         static bool decodeBatch();
 

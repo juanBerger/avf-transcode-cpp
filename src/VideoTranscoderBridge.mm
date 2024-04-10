@@ -17,6 +17,14 @@ bool VideoTranscoderBridge::setNewSource(std::string& path, float startTime){
     return [VideoTranscoder setNewSource:path secondArg:startTime];
 }
 
+void VideoTranscoderBridge::transcodeToFile(std::string& path){
+    [VideoTranscoder transcodeToFile:path];
+}
+
+void VideoTranscoderBridge::transcodeToMemory(std::string& path){
+    [VideoTranscoder transcodeToMemory:path];
+}
+
 bool VideoTranscoderBridge::decodeBatch() {
     return [VideoTranscoder decodeBatch];
 }
